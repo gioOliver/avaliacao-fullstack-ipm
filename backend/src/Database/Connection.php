@@ -1,8 +1,11 @@
 <?php
-class Connection {
-    private static $instance = null;
 
-    public static function getConnection() {
+class Connection
+{
+    private static ?PDO $instance = null;
+
+    public static function getConnection()
+    {
         if (self::$instance === null) {
             $host = getenv('DB_HOST');
             $dbname = getenv('DB_NAME');

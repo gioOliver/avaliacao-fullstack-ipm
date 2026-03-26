@@ -1,10 +1,12 @@
 <?php
-require_once __DIR__ . '/../src/Database/Connection.php';
 
-$conn = Connection::getConnection();
+require_once __DIR__ . '/../src/Core/Router.php';
 
-$stmt = $conn->query("SELECT 1 as test");
-$result = $stmt->fetch();
+$router = new Router();
 
-echo "Conexão OK 🚀<br>";
-echo "Teste query: " . $result['test'];
+require_once __DIR__ . '/../routes/api.php';
+
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$method = $_SERVER['REQUEST_METHOD'];
+
+$router->dispatch($uri, $method);
