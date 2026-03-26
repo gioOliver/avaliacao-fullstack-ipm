@@ -7,6 +7,9 @@ class AuthController
 {
     public function register(): void
     {
+
+        header('Content-Type: application/json');
+
         try {
             $data = json_decode(file_get_contents("php://input"), true);
 
@@ -28,6 +31,8 @@ class AuthController
 
     public function login(): void
     {
+
+        header('Content-Type: application/json');
 
         try {
             $data = json_decode(file_get_contents("php://input"), true);

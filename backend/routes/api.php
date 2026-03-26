@@ -1,11 +1,12 @@
 <?php
 
 require_once __DIR__ . '/../src/Controllers/AuthController.php';
+require_once __DIR__ . '/../src/Controllers/TaskController.php';
 
 /** @var Router $router */
 
 $router->add('GET', '/', function () {
-    echo PHP_VERSION . ' -- ' .getenv('JWT_SECRET');
+    echo PHP_VERSION;
 });
 
 $router->add('POST', '/register', function () {
@@ -14,4 +15,8 @@ $router->add('POST', '/register', function () {
 
 $router->add('POST', '/login', function () {
     (new AuthController())->login();
+});
+
+$router->add('POST', '/tasks', function () {
+    (new TaskController())->create();
 });
