@@ -17,6 +17,7 @@ services:
       DB_PASS: ${DB_PASS}
     depends_on:
       - db
+    command: sh -c "composer install && apache2-foreground"
 
   db:
     image: mysql:8.0
