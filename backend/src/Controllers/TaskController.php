@@ -7,8 +7,6 @@ class TaskController
 {
     public function create(): void
     {
-        header('Content-Type: application/json');
-
         try {
             $user = AuthMiddleware::handle();
 
@@ -21,16 +19,16 @@ class TaskController
 
             http_response_code(201);
 
-            echo json_encode([
+            Response::json([
                 "message" => "Tarefa criada com sucesso",
                 "task_id" => $taskId
-            ]);
+            ], 201);
         } catch (Exception $e) {
             http_response_code(400);
 
-            echo json_encode([
+            Response::json([
                 "error" => $e->getMessage()
-            ]);
+            ], 400);
         }
     }
 }

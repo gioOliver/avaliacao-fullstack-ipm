@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../Services/UserService.php';
 require_once __DIR__ . '/../Utils/JwtHelper.php';
+require_once __DIR__ . '/../Utils/Response.php';
 
 class AuthController
 {
@@ -16,16 +17,16 @@ class AuthController
             $service = new UserService();
             $userId = $service->create($data);
 
-            echo json_encode([
+            Response::json([
                 "message" => "Usuário cadastrado com sucesso",
                 "user_id" => $userId
-            ]);
+            ], 201);
         } catch (Exception $e) {
             http_response_code(400);
 
-            echo json_encode([
+            Response::json([
                 "error" => $e->getMessage()
-            ]);
+            ], 400);
         }
     }
 
@@ -42,16 +43,16 @@ class AuthController
 
             $token = JwtHelper::generate($user);
 
-            echo json_encode([
+            Response::json([
                 "message" => "Login realizado com sucesso",
                 "token" => $token
-            ]);
+            ], 200);
         } catch (Exception $e) {
             http_response_code(401);
 
-            echo json_encode([
+            Response::json([
                 "error" => $e->getMessage()
-            ]);
+            ], 401);
         }
     }
 }

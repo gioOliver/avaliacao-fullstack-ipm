@@ -32,15 +32,12 @@ class AuthMiddleware
         }
     }
 
-    #[NoReturn]
     private static function unauthorized($message): void
     {
-        http_response_code(401);
+        require_once __DIR__ . '/../Utils/Response.php';
 
-        echo json_encode([
+        Response::json([
             "error" => $message
-        ]);
-
-        exit;
+        ], 401);
     }
 }
