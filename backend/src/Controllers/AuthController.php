@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../Services/UserService.php';
+require_once __DIR__ . '/../Utils/JwtHelper.php';
 
 class AuthController
 {
@@ -18,6 +19,30 @@ class AuthController
             ]);
         } catch (Exception $e) {
             http_response_code(400);
+
+            echo json_encode([
+                "error" => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function login(): void
+    {
+
+        try {
+            $data = json_decode(file_get_contents("php://input"), true);
+
+            $service = new UserService();
+            $user = $service->login($data);
+
+            $token = JwtHelper::generate($user);
+
+            echo json_encode([
+                "message" => "Login realizado com sucesso",
+                "token" => $token
+            ]);
+        } catch (Exception $e) {
+            http_response_code(401);
 
             echo json_encode([
                 "error" => $e->getMessage()

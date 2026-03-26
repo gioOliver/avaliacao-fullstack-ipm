@@ -44,4 +44,28 @@ class UserService
 
         return $this->userModel->create($data);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function login($data): array
+    {
+        if (empty($data['email']) || empty($data['password'])) {
+            throw new Exception("Email e senha são obrigatórios");
+        }
+
+        $email = strtolower(trim($data['email']));
+
+        $user = $this->userModel->findByEmail($email);
+
+        if (!$user) {
+            throw new Exception("Credenciais inválidas");
+        }
+
+        if (!password_verify($data['password'], $user['password'])) {
+            throw new Exception("Credenciais inválidas");
+        }
+
+        return $user;
+    }
 }

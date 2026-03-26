@@ -7,12 +7,21 @@ use Firebase\JWT\Key;
 
 class JwtHelper
 {
-    private static string $secret = "7c64effa-3dd6-472c-899e-b967995bd502";
+    private static ?string $secret = null;
+
+    private static function getSecret(): false|array|string
+    {
+        if (!self::$secret) {
+            self::$secret = getenv('JWT_SECRET');
+        }
+
+        return self::$secret;
+    }
 
     public static function generate($user): string
     {
         $payload = [
-            "iss" => "seu-app",
+            "iss" => "todo-app",
             "iat" => time(),
             "exp" => time() + 3600,
             "data" => [
@@ -21,11 +30,11 @@ class JwtHelper
             ]
         ];
 
-        return JWT::encode($payload, self::$secret, 'HS256');
+        return JWT::encode($payload, self::getSecret(), 'HS256');
     }
 
     public static function validate($token): stdClass
     {
-        return JWT::decode($token, new Key(self::$secret, 'HS256'));
+        return JWT::decode($token, new Key(self::getSecret(), 'HS256'));
     }
 }
