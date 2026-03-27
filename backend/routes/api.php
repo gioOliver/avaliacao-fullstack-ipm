@@ -20,3 +20,7 @@ $router->add('POST', '/login', function () {
 $router->add('POST', '/tasks', function () {
     (new TaskController())->create();
 });
+
+$router->add('GET', '/tasks', function () {
+    (new TaskController())->index();
+});

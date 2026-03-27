@@ -26,4 +26,18 @@ class Task
 
         return $this->connection->lastInsertId();
     }
+
+    public function getByUser($userId): array
+    {
+        $stmt = $this->connection->prepare("
+        SELECT id, title, description, status, due_date, created_at
+        FROM tasks
+        WHERE user_id = ?
+        AND deleted_at IS NULL
+        ORDER BY created_at DESC ");
+
+        $stmt->execute([$userId]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

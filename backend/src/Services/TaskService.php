@@ -33,4 +33,9 @@ class TaskService
 
         return $this->taskModel->create($data);
     }
+
+    public function getByUser($userId): array
+    {
+        return $this->taskModel->getByUser($userId);
+    }
 }
