@@ -1,14 +1,19 @@
+import { formatDate } from "../../utils/date";
+
 export default function TaskModal({ task, onClose, onEdit, onDelete }) {
     return (
         <div style={styles.overlay}>
             <div style={styles.modal}>
-                <h2>{task.title}</h2>
+                <h2>#{task.id} - {task.title}</h2>
 
                 <p>{task.description}</p>
 
-                <p>Prazo: {task.due_date}</p>
+                <p style={styles.date}>
+                    Prazo {formatDate(task.due_date)}
+                </p>
 
                 <p style={styles.status}>
+                    <span style={styles.date}>Criado em {formatDate(task.created_at)}. </span>
                     Status: {task.status === "concluido" ? "Concluído" : "Em aberto"}
                 </p>
 

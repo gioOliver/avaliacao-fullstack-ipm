@@ -37,7 +37,8 @@ export default function Dashboard() {
 
             status: task.status === "concluido" ? "concluido" : "em aberto",
 
-            due_date: task.due_date.split(" ")[0]
+            due_date: task.due_date.split(" ")[0],
+            created_at: task.created_at.split(" ")[0],
         }));
 
         setTasks(formatted);
@@ -99,7 +100,7 @@ export default function Dashboard() {
         <div>
             <Header />
 
-            <div style={{ padding: 20 }}>
+            <div style={{ padding: 20, textAlign: "right" }}>
                 <button onClick={handleCreateTask}>+ Nova Tarefa</button>
             </div>
 

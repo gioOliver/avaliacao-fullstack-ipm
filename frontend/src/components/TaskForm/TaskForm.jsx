@@ -38,6 +38,7 @@ export default function TaskForm({ task, onSave, onClose }) {
                     style={styles.textarea}
                 />
 
+                <label>Prazo</label>
                 <input
                     type="date"
                     value={dueDate}

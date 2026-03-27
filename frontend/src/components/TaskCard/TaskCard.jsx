@@ -3,7 +3,7 @@
 export default function TaskCard({ task, onClick }) {
     return (
         <div onClick={onClick} style={styles.card}>
-            <h4 style={{ margin: 0 }}>{task.title}</h4>
+            <h4 style={{ margin: 0 }}>#{task.id} - {task.title}</h4>
             <p style={styles.desc}>{task.description}</p>
             <p style={styles.desc}>Prazo: {task.due_date}</p>
         </div>
