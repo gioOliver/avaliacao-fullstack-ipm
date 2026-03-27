@@ -1,13 +1,23 @@
 FROM php:8.2-apache
 
-# Extensoes php
-RUN docker-php-ext-install pdo pdo_mysql
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install pdo pdo_mysql
 
-# Ativa rewrite para o router
 RUN a2enmod rewrite
 
-# Copia as configs do apache para detro do container
 COPY docker/apache/default.conf /etc/apache2/sites-available/000-default.conf
 
-# Instala composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+COPY backend/ /var/www/html/
+
+RUN composer install --no-interaction --prefer-dist
+
+EXPOSE 80
+
+CMD ["apache2-foreground"]

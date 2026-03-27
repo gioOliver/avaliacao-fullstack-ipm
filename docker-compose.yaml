@@ -4,8 +4,6 @@ services:
       context: .
       dockerfile: docker/apache/Dockerfile
     container_name: php_app
-    volumes:
-      - ./backend:/var/www/html
     ports:
       - "8000:80"
     environment:
@@ -16,7 +14,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
     depends_on:
       - db
-    command: sh -c "composer install && apache2-foreground"
+    restart: unless-stopped
 
   db:
     image: mysql:8.0
@@ -45,13 +43,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: react_app
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     ports:
       - "5173:5173"
-    stdin_open: true
-    tty: true
+    depends_on:
+      - app
+    restart: unless-stopped
 
 volumes:
   db_data:

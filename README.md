@@ -27,9 +27,9 @@ A aplicação consiste em uma API REST em PHP integrada a um front-end em React,
 
 Antes de iniciar, certifique-se de ter instalado em sua máquina:
 
-* Docker
+* [Git](https://git-scm.com/downloads)
+* [Docker](https://www.docker.com/products/docker-desktop)
 * Docker Compose
-* Git
 
 ---
 
