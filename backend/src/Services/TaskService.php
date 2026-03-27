@@ -38,4 +38,38 @@ class TaskService
     {
         return $this->taskModel->getByUser($userId);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function update($id, $userId, $data): true
+    {
+        if (empty($data['title'])) {
+            throw new Exception("Título é obrigatório");
+        }
+
+        if (empty($data['due_date'])) {
+            throw new Exception("Data de vencimento é obrigatória");
+        }
+
+        $date = DateTime::createFromFormat('Y-m-d', $data['due_date']);
+        if (!$date || $date->format('Y-m-d') !== $data['due_date']) {
+            throw new Exception("Data inválida (use Y-m-d)");
+        }
+
+        $allowedStatus = ['em aberto', 'concluido'];
+        if (!in_array($data['status'], $allowedStatus)) {
+            throw new Exception("Status inválido");
+        }
+
+        $data['description'] = $data['description'] ?? null;
+
+        $updated = $this->taskModel->update($id, $userId, $data);
+
+        if ($updated === 0) {
+            throw new Exception("Tarefa não encontrada ou não pertence ao usuário");
+        }
+
+        return true;
+    }
 }

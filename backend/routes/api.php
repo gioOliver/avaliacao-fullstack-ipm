@@ -24,3 +24,7 @@ $router->add('POST', '/tasks', function () {
 $router->add('GET', '/tasks', function () {
     (new TaskController())->index();
 });
+
+$router->add('PUT', '/tasks', function () {
+    (new TaskController())->update();
+});

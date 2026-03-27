@@ -40,4 +40,26 @@ class Task
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function update($id, $userId, $data): int
+    {
+        $stmt = $this->connection->prepare("
+        UPDATE tasks
+        SET title = ?, description = ?, status = ?, due_date = ?
+        WHERE id = ? 
+        AND user_id = ?
+        AND deleted_at IS NULL
+    ");
+
+        $stmt->execute([
+            $data['title'],
+            $data['description'],
+            $data['status'],
+            $data['due_date'],
+            $id,
+            $userId
+        ]);
+
+        return $stmt->rowCount();
+    }
 }

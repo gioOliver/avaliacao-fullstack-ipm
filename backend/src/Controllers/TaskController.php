@@ -53,4 +53,29 @@ class TaskController
             ], 400);
         }
     }
+
+    public function update(): void
+    {
+        try {
+            $id = $_GET['id'] ?? null;
+
+            if (!$id) {
+                throw new Exception("ID da tarefa é obrigatório");
+            }
+
+            $data = json_decode(file_get_contents("php://input"), true);
+
+            $service = new TaskService();
+            $service->update($id, $this->user->id, $data);
+
+            Response::json([
+                "message" => "Tarefa atualizada com sucesso"
+            ]);
+
+        } catch (Exception $e) {
+            Response::json([
+                "error" => $e->getMessage()
+            ], 400);
+        }
+    }
 }
