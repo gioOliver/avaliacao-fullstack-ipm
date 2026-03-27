@@ -42,5 +42,18 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react_app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+
 volumes:
   db_data:
