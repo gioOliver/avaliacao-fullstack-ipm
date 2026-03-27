@@ -48,7 +48,6 @@ export default function Login() {
 
             setSuccess("Usuário criado com sucesso");
 
-            // opcional: já volta pra tela de login
             setIsRegister(false);
         } catch (err) {
             setError(err.message);
@@ -116,9 +115,29 @@ export default function Login() {
                         
                     </div>
 
-                    <button style={{ marginTop: 10 }} type="submit">
-                        Criar conta
-                    </button>
+                    <div style={{
+                        marginTop: 10,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}>
+                        <button type="submit">
+                            Criar conta
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => setIsRegister(false)}
+                            style={{
+                                background: "transparent",
+                                border: "none",
+                                color: "#524df2",
+                                cursor: "pointer"
+                            }}
+                        >
+                            Já tenho conta
+                        </button>
+                    </div>
                 </form>
             ) : (
                 <form onSubmit={handleLogin}>
@@ -150,18 +169,32 @@ export default function Login() {
                         />
                     </div>
 
-                    <button style={{ marginTop: 10 }} type="submit">
-                        Entrar
-                    </button>
+                    <div style={{
+                        marginTop: 10,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}>
+                        <button type="submit">
+                            Entrar
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => setIsRegister(true)}
+                            style={{
+                                background: "transparent",
+                                border: "none",
+                                color: "#524df2",
+                                cursor: "pointer"
+                            }}
+                        >
+                            Criar conta
+                        </button>
+                    </div>
                 </form>
             )}
 
-            <button
-                style={{ marginTop: 10, background: "transparent", border: "none", color: "lightblue", cursor: "pointer" }}
-                onClick={() => setIsRegister(!isRegister)}
-            >
-                {isRegister ? "Já tenho conta" : "Criar conta"}
-            </button>
 
             {error && <p style={{ color: "red" }}>{error}</p>}
             {success && <p style={{ color: "green" }}>{success}</p>}
