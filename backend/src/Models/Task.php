@@ -62,4 +62,19 @@ class Task
 
         return $stmt->rowCount();
     }
+
+    public function delete($id, $userId)
+    {
+        $stmt = $this->connection->prepare("
+        UPDATE tasks
+        SET deleted_at = NOW()
+        WHERE id = ?
+        AND user_id = ?
+        AND deleted_at IS NULL
+    ");
+
+        $stmt->execute([$id, $userId]);
+
+        return $stmt->rowCount();
+    }
 }

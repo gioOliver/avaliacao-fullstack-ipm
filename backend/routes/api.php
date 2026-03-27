@@ -28,3 +28,7 @@ $router->add('GET', '/tasks', function () {
 $router->add('PUT', '/tasks', function () {
     (new TaskController())->update();
 });
+
+$router->add('DELETE', '/tasks', function () {
+    (new TaskController())->delete();
+});

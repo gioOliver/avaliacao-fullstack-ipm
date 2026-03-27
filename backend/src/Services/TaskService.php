@@ -72,4 +72,19 @@ class TaskService
 
         return true;
     }
+
+    public function delete($id, $userId): true
+    {
+        if (!$id) {
+            throw new Exception("ID da tarefa é obrigatório");
+        }
+
+        $deleted = $this->taskModel->delete($id, $userId);
+
+        if ($deleted === 0) {
+            throw new Exception("Tarefa não encontrada, já removida ou sem permissão");
+        }
+
+        return true;
+    }
 }

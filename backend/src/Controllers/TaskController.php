@@ -78,4 +78,23 @@ class TaskController
             ], 400);
         }
     }
+
+    public function delete(): void
+    {
+        try {
+            $id = $_GET['id'] ?? null;
+
+            $service = new TaskService();
+            $service->delete($id, $this->user->id);
+
+            Response::json([
+                "message" => "Tarefa removida com sucesso"
+            ]);
+
+        } catch (Exception $e) {
+            Response::json([
+                "error" => $e->getMessage()
+            ], 400);
+        }
+    }
 }
